@@ -93,10 +93,18 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 
-  if (!lcd_init())
+  uint16_t test_buf[128];
+
+  for (int i = 0; i < 64; i++)
   {
-	  // TODO: catch init error
+        test_buf[i] = 0xF800;
   }
+
+  lcd_init();
+
+  lcd_window_set(0, 7, 0, 7);
+
+  lcd_window_write(test_buf, sizeof(test_buf));
 
 
 
@@ -213,7 +221,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, TP_CS_Pin|LCD_CS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(RST_GPIO_Port, RST_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, RST_Pin|LCD_RS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : TP_CS_Pin LCD_CS_Pin */
   GPIO_InitStruct.Pin = TP_CS_Pin|LCD_CS_Pin;
@@ -222,12 +230,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : RST_Pin */
-  GPIO_InitStruct.Pin = RST_Pin;
+  /*Configure GPIO pins : RST_Pin LCD_RS_Pin */
+  GPIO_InitStruct.Pin = RST_Pin|LCD_RS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(RST_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pin : TP_IRQ_Pin */
   GPIO_InitStruct.Pin = TP_IRQ_Pin;
