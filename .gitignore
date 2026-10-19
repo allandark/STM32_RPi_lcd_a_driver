@@ -3,7 +3,7 @@
 cmake/
 *.launch
 
-docs/spi_touch_screen/*
+docs/spi_touch_screen/
 
 Debug/
 Release/
