@@ -1,0 +1,4 @@
+HR2046 - touch controller/ clone of XPT2046
+ILI9486 - lcd controller
+74HC4094- 2x shift registers
+
